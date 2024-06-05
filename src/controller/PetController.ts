@@ -22,7 +22,7 @@ export default class PetController{
         }
         
         const novoPet: TipoPet = {id: geraId(), nome, especie, adotado, dataNasc};
-        listaPets.push(novoPet);
+        this.repository.criaPet(novoPet);
         res.status(201).json(novoPet);
     }
 

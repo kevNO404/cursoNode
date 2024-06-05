@@ -11,7 +11,7 @@ export default class PetRepository implements InterfacePetRepository{
     }
     
     criaPet(pet: PetEntity): void {
-        throw new Error("Method not implemented.");
+        listaPets.push(pet);
     }
     listaPet(): PetEntity[] {
         throw new Error("Method not implemented.");
