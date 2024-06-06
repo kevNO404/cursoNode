@@ -11,16 +11,44 @@ export default class PetRepository implements InterfacePetRepository{
     }
     
     criaPet(pet: PetEntity): void {
-        listaPets.push(pet);
+        this.repository.save(pet);
     }
-    listaPet(): PetEntity[] {
-        throw new Error("Method not implemented.");
+
+    async listaPet(): Promise<PetEntity[]> {
+        return await this.repository.find();
     }
-    atualizaPet(id: number, pet: PetEntity): void {
-        throw new Error("Method not implemented.");
+
+    async atualizaPet(id: number, pet: PetEntity): Promise<{ success: boolean; message?: string }> {
+        try{
+            const petEncontrado = await this.repository.findOne({where: {id: id}});
+            if (!petEncontrado) {
+                return{ success: false, message: "Pet não encontrado" }
+            }
+            Object.assign(petEncontrado, pet);
+
+            await this.repository.save(petEncontrado);
+
+            return { success: true };
+        } catch (error) {
+            console.log(error);
+            return{ success: false, message: "Erro ao atualizar o Pet" };
+        };
     }
-    deletaPet(id: number, pet: PetEntity): void {
-        throw new Error("Method not implemented.");
+
+    async deletaPet(id: number): Promise<{success: boolean, message?: string}> {
+        try{
+            const petEncontrado = await this.repository.findOne({where: {id: id}});
+            if (!petEncontrado) {
+                return{ success: false, message: "Pet não encontrado" }
+            }
+
+            await this.repository.remove(petEncontrado);
+
+            return { success: true };
+        } catch (error) {
+            console.log(error);
+            return{ success: false, message: "Erro ao atualizar o Pet" };
+        };
     }
     
 };

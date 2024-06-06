@@ -14,4 +14,12 @@ export default class PetEntity {
     adotado: boolean;
     @Column()
     dataNasc: Date;
+
+    constructor(id:number, nome:string, especie:EnumEspecie, adotado:boolean, dataNasc:Date){
+        this.id = id;
+        this.nome = nome;
+        this.especie = especie;
+        this.adotado = adotado;
+        this.dataNasc = dataNasc;
+    }
 }
